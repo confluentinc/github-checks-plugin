@@ -4,6 +4,9 @@ import edu.hm.hafner.util.FilteredLog;
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import hudson.model.Job;
 import hudson.model.Run;
+import jenkins.scm.api.metadata.ContributorMetadataAction;
+import jenkins.scm.api.mixin.ChangeRequestSCMHead;
+import jenkins.scm.api.SCMHead;
 import org.apache.commons.lang3.StringUtils;
 import org.jenkinsci.plugins.github_branch_source.GitHubAppCredentials;
 
@@ -37,6 +40,28 @@ public abstract class GitHubChecksContext {
      * @return the source repository's full name
      */
     public abstract String getRepository();
+
+    /**
+     * Returns PR's author name in String.
+     * Return empty string if it is not PR or source not exist
+     *
+     * @return the author's name
+     */
+    public String getContributor() {
+        Optional<SCMHead> optionalHead = getScmFacade().findHead(getJob());
+        if (optionalHead.isPresent()) {
+            SCMHead head = optionalHead.get();
+            if (head instanceof ChangeRequestSCMHead) {
+                ContributorMetadataAction cm = job.getAction(ContributorMetadataAction.class);
+                String contributor = cm.getContributor();
+                return contributor;
+            }
+            else {
+                return "";
+            }
+        }
+        return "";
+    }
 
     /**
      * Returns whether the context is valid (with all properties functional) to use.

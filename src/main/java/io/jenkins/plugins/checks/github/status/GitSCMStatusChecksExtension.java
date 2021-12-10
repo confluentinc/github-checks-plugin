@@ -20,6 +20,8 @@ public class GitSCMStatusChecksExtension extends GitSCMExtension implements GitH
     private String name = "Jenkins";
     private boolean suppressLogs;
     private boolean skipProgressUpdates = false;
+    private boolean publishConfluentIncPR = false;
+    private boolean publishNonConfluentIncPR = false;
 
     /**
      * Constructor for stapler.
@@ -52,6 +54,16 @@ public class GitSCMStatusChecksExtension extends GitSCMExtension implements GitH
     @Override
     public boolean isSkipProgressUpdates() {
         return skipProgressUpdates;
+    }
+
+    @Override
+    public boolean isPublishConfluentIncPR() {
+        return publishConfluentIncPR;
+    }
+
+    @Override
+    public boolean isPublishNonConfluentIncPR() {
+        return publishNonConfluentIncPR;
     }
 
     @DataBoundSetter
@@ -89,6 +101,16 @@ public class GitSCMStatusChecksExtension extends GitSCMExtension implements GitH
     @DataBoundSetter
     public void setSuppressLogs(final boolean suppressLogs) {
         this.suppressLogs = suppressLogs;
+    }
+
+    @DataBoundSetter
+    public void setPublishConfluentIncPR(final boolean publishConfluentIncPR) {
+        this.publishConfluentIncPR = publishConfluentIncPR;
+    }
+
+    @DataBoundSetter
+    public void setPublishNonConfluentIncPR(final boolean publishNonConfluentIncPR) {
+        this.publishNonConfluentIncPR = publishNonConfluentIncPR;
     }
 
     /**

@@ -67,6 +67,30 @@ public class GitHubStatusChecksProperties extends AbstractStatusChecksProperties
         return getConfigurations(job).orElse(DEFAULT_CONFIGURATION).isSkipProgressUpdates();
     }
 
+    /**
+     * Returns whether to publish confluentinc PR only.
+     *
+     * @param job
+     *         the job to get the configurations for
+     *
+     * @return true if publishing confluentinc PR only
+     */
+    public boolean isPublishConfluentIncPR(Job<?, ?> job) {
+        return getConfigurations(job).orElse(DEFAULT_CONFIGURATION).isPublishConfluentIncPR();
+    }
+
+    /**
+     * Returns whether to publish non confluentinc PR only.
+     *
+     * @param job
+     *         the job to get the configurations for
+     *
+     * @return true if publishing non confluentinc PR only
+     */
+    public boolean isPublishNonConfluentIncPR(Job<?, ?> job) {
+        return getConfigurations(job).orElse(DEFAULT_CONFIGURATION).isPublishNonConfluentIncPR();
+    }
+
     private Optional<GitHubStatusChecksConfigurations> getConfigurations(final Job<?, ?> job) {
         Optional<GitHubSCMSource> gitHubSCMSource = scmFacade.findGitHubSCMSource(job);
         if (gitHubSCMSource.isPresent()) {
